@@ -1,0 +1,40 @@
+﻿ <!DOCTYPE html>
+<html xmlns:fb="https://www.facebook.com/2008/fbml">
+    <head>
+      <title>AboutMe JSON from Facebook</title>
+    </head>
+    <body>
+      <div id="fb-root"></div>
+      <script>
+          window.fbAsyncInit = function () {
+              FB.init({
+                  appId: '308240015853156',
+                  status: true,
+                  cookie: true,
+                  xfbml: true,
+                  oauth: true
+              });
+              showLoader(true);
+          };
+          (function (d) {
+              var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
+              js = d.createElement('script'); js.id = id; js.async = true;
+              js.src = "//connect.facebook.net/en_US/all.js";
+              d.getElementsByTagName('head')[0].appendChild(js);
+          } (document));
+          /*AAAEYV7imhmQBAEsgmU9ODJumwU30gb0iMHlldB8QSZBIy262HTxWxc7cfZAazchjSZBs4bkJF6ZBjON8VEoo621Jj5DZCRptFzZBJ2kzLrcfqYnlVCtTAG*/
+          
+          (function showJSONAboutMe(response) {
+             if (response.authResponse) {
+              FB.api('/me?access_token=AAAEYV7imhmQBAEsgmU9ODJumwU30gb0iMHlldB8QSZBIy262HTxWxc7cfZAazchjSZBs4bkJF6ZBjON8VEoo621Jj5DZCRptFzZBJ2kzLrcfqYnlVCtTAG', 
+              function (response) {
+                  document.write(response.toString());               
+              });
+              }});
+      </script>
+      <div class="fb-login-button" data-perms="user_about_me">
+        Login with Facebook
+        FB.Event.subscribe('auth.statusChange', showJSONAboutMe);
+      </div>
+    </body>
+ </html>
