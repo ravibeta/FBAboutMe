@@ -1,40 +1,61 @@
 ﻿ <!DOCTYPE html>
-<html xmlns:fb="https://www.facebook.com/2008/fbml">
-    <head>
+<html>
+     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# profile: http://ogp.me/ns/profile#" >
+  <meta property="fb:app_id"      content="219649781438574" /> 
+  <meta property="og:type"        content="profile" /> 
+  <meta property="og:url"         content="http://fbgraph.sharepoint.com/Pages/FBAboutMe.aspx" /> 
+  <meta property="og:title"       content="AboutMe JSON from Facebook" /> 
+  <meta property="og:description" content="AboutMe JSON from Facebook" /> 
+  <meta property="og:image"       content="http://ogp.me/logo.png" />
       <title>AboutMe JSON from Facebook</title>
     </head>
     <body>
       <div id="fb-root"></div>
       <script>
+          function replacer(key, value) {
+              if (typeof value === 'number' && !isFinite(value)) {
+                  return String(value);
+              }
+              return value;
+          }
           window.fbAsyncInit = function () {
               FB.init({
-                  appId: '308240015853156',
+                  appId: '219649781438574',
+                  channelURL: 'http://fbgraph.sharepoint.com/Pages/FBAboutMe.aspx',
                   status: true,
                   cookie: true,
                   xfbml: true,
                   oauth: true
               });
-              showLoader(true);
-          };
+FB.getLoginStatus(function(response) {
+  if (response.authResponse) {
+FB.api('/me?access_token=AAADHxTMymG4BAPAZBLZC8UAXhMxrOt4jIWRrUmo7G76lLU1pUys0TZCBfRLiZBZCzZCzaHRHBrq1aXfmVqBkHWZBpWwZASjExKUWAt0TlBi7LAZDZD',
+              function (response) {
+              // alert(JSON.stringify(response, replacer));
+               alert(response.name);
+               var userInfo = document.getElementById('user-info');
+               userInfo.innerHTML = '<p>' + response.name + '</p>';
+              });
+  } else {
+    alert('no user session available, someone you dont know');
+  }
+});
+FB.Event.subscribe('auth.login', function () {
+          top.location=window.location="http://www.facebook.com/dialog/oauth/?scope=user_about_me&client_id=219649781438574&redirect_uri=http://fbgraph.sharepoint.com/Pages/FBAboutMe.aspx&response_type=code";
+      });
+
+           };
           (function (d) {
               var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
               js = d.createElement('script'); js.id = id; js.async = true;
               js.src = "//connect.facebook.net/en_US/all.js";
               d.getElementsByTagName('head')[0].appendChild(js);
           } (document));
-          /*AAAEYV7imhmQBAEsgmU9ODJumwU30gb0iMHlldB8QSZBIy262HTxWxc7cfZAazchjSZBs4bkJF6ZBjON8VEoo621Jj5DZCRptFzZBJ2kzLrcfqYnlVCtTAG*/
-          
-          (function showJSONAboutMe(response) {
-             if (response.authResponse) {
-              FB.api('/me?access_token=AAAEYV7imhmQBAEsgmU9ODJumwU30gb0iMHlldB8QSZBIy262HTxWxc7cfZAazchjSZBs4bkJF6ZBjON8VEoo621Jj5DZCRptFzZBJ2kzLrcfqYnlVCtTAG', 
-              function (response) {
-                  document.write(response.toString());               
-              });
-              }});
       </script>
-      <div class="fb-login-button" data-perms="user_about_me">
+      <div class="fb-login-button" scope="user_about_me"  autologoutlink="true" >
         Login with Facebook
-        FB.Event.subscribe('auth.statusChange', showJSONAboutMe);
       </div>
+<br/>
+      <div id="user-info"></div>
     </body>
  </html>
