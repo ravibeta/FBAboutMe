@@ -32,7 +32,7 @@ FB.getLoginStatus(function(response) {
 FB.api('/me?access_token=AAADHxTMymG4BAPAZBLZC8UAXhMxrOt4jIWRrUmo7G76lLU1pUys0TZCBfRLiZBZCzZCzaHRHBrq1aXfmVqBkHWZBpWwZASjExKUWAt0TlBi7LAZDZD',
               function (response) {
               // alert(JSON.stringify(response, replacer));
-               alert(response.name);
+              alert(response.name);
                var userInfo = document.getElementById('user-info');
                userInfo.innerHTML = '<p>' + response.name + '</p>';
               });
